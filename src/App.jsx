@@ -336,8 +336,17 @@ function AdminPanel() {
   const [saved, setSaved] = useState("");
 
   useEffect(() => {
+    loadLoginSettings();
+  }, []);
+
+  useEffect(() => {
     if (loggedIn) loadAdminData();
   }, [loggedIn]);
+
+  async function loadLoginSettings() {
+    const { data: settingsData } = await supabase.from("settings").select("*").eq("id", 1).single();
+    if (settingsData) setSettings(settingsData);
+  }
 
   async function loadAdminData() {
     const { data: settingsData } = await supabase.from("settings").select("*").eq("id", 1).single();
