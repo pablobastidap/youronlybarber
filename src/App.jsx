@@ -123,14 +123,15 @@ function BookingWebsite() {
     <main>
       <header className="nav">
         <a className="brand" href="/">
-          <span className="brandIcon">✂</span>
           <span>{settings.brand}</span>
         </a>
         <nav>
           <a href="#servicios">Servicios</a>
           <a href="#reserva">Reserva</a>
           <a href={`https://wa.me/${settings.phone}`}>WhatsApp</a>
-          <a className="adminNav" href="/admin">Panel admin</a>
+          <a className="adminHidden" href="/admin">
+  acceso privado
+</a>
         </nav>
       </header>
 
