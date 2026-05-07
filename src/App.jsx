@@ -128,10 +128,6 @@ function BookingWebsite() {
         <nav>
           <a href="#servicios">Servicios</a>
           <a href="#reserva">Reserva</a>
-          <a href={`https://wa.me/${settings.phone}`}>WhatsApp</a>
-          <a className="adminHidden" href="/admin">
-  acceso privado
-</a>
         </nav>
       </header>
 
@@ -299,6 +295,9 @@ function BookingWebsite() {
           )}
         </div>
       </section>
+      <footer className="privateFooter">
+  <a href="/admin">.</a>
+</footer>
     </main>
   );
 }
