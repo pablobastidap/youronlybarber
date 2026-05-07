@@ -1,0 +1,585 @@
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  background:#090909;
+  color:white;
+  font-family:Inter,Arial,sans-serif;
+  overflow-x:hidden;
+}
+
+a{
+  text-decoration:none;
+  color:inherit;
+}
+
+main{
+  min-height:100vh;
+}
+
+/* NAV */
+
+.nav{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  z-index:1000;
+  padding:24px 70px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:linear-gradient(to bottom,rgba(0,0,0,.85),transparent);
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:28px;
+  font-weight:700;
+}
+
+.brandIcon{
+  color:#c69656;
+}
+
+.nav nav{
+  display:flex;
+  gap:30px;
+  align-items:center;
+}
+
+.nav nav a{
+  font-size:14px;
+  transition:.2s;
+}
+
+.nav nav a:hover{
+  color:#c69656;
+}
+
+.adminNav{
+  border:1px solid rgba(255,255,255,.2);
+  padding:12px 20px;
+  border-radius:999px;
+}
+
+/* HERO */
+
+.heroSection{
+  min-height:100vh;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:140px 30px 100px;
+  background-image:url("https://plus.unsplash.com/premium_photo-1661380558859-40df8dd91dfd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8YmFyYmVyfGVufDB8fDB8fHww");
+  background-size:cover;
+  background-position:center;
+}
+
+.overlay{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,.62);
+}
+
+.heroContent{
+  position:relative;
+  z-index:2;
+  text-align:center;
+  max-width:900px;
+}
+
+.kicker{
+  color:#c69656;
+  text-transform:uppercase;
+  letter-spacing:3px;
+  font-size:13px;
+  margin-bottom:18px;
+}
+
+.heroContent h1{
+  font-size:90px;
+  line-height:.95;
+  margin-bottom:24px;
+  font-family:Georgia,serif;
+}
+
+.subtitle{
+  color:#d0d0d0;
+  line-height:1.8;
+  font-size:18px;
+  max-width:700px;
+  margin:auto;
+}
+
+.heroActions{
+  margin-top:40px;
+  display:flex;
+  justify-content:center;
+  gap:18px;
+  flex-wrap:wrap;
+}
+
+.goldButton,
+.mainButton{
+  background:#c69656;
+  border:none;
+  color:white;
+  border-radius:999px;
+  padding:16px 34px;
+  font-weight:600;
+  cursor:pointer;
+  transition:.25s;
+}
+
+.goldButton:hover,
+.mainButton:hover{
+  background:#d6a869;
+  transform:translateY(-2px);
+}
+
+.outlineButton{
+  border:1px solid rgba(255,255,255,.3);
+  border-radius:999px;
+  padding:16px 34px;
+  transition:.25s;
+}
+
+.outlineButton:hover{
+  background:white;
+  color:black;
+}
+
+/* SERVICES */
+
+.servicesSection{
+  padding:120px 60px;
+  background:#0e0e0e;
+}
+
+.sectionLabel{
+  color:#c69656;
+  text-transform:uppercase;
+  letter-spacing:3px;
+  font-size:13px;
+  margin-bottom:14px;
+}
+
+.servicesSection h2,
+.bookingIntro h2,
+.adminBox h1{
+  font-size:58px;
+  margin-bottom:55px;
+  font-family:Georgia,serif;
+}
+
+.serviceCards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:24px;
+}
+
+.serviceCards article{
+  background:#131313;
+  border:1px solid rgba(255,255,255,.06);
+  padding:34px;
+  border-radius:28px;
+  transition:.25s;
+}
+
+.serviceCards article:hover{
+  transform:translateY(-6px);
+  border-color:#c69656;
+}
+
+.serviceCards h3{
+  margin-bottom:12px;
+  font-size:24px;
+}
+
+.serviceCards p{
+  color:#b0b0b0;
+  line-height:1.7;
+  margin-bottom:18px;
+}
+
+.serviceCards b{
+  color:#c69656;
+  font-size:26px;
+}
+
+/* BOOKING */
+
+.bookingSection{
+  padding:120px 60px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:70px;
+}
+
+.bookingIntro p{
+  color:#b0b0b0;
+  line-height:1.8;
+}
+
+.infoGrid{
+  margin-top:45px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+
+.infoGrid div{
+  background:#111;
+  padding:26px;
+  border-radius:24px;
+  border:1px solid rgba(255,255,255,.06);
+}
+
+.infoGrid b{
+  display:block;
+  font-size:34px;
+  color:#c69656;
+  margin-bottom:8px;
+}
+
+/* CARD */
+
+.bookingCard,
+.adminBox{
+  background:#101010;
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:32px;
+  padding:40px;
+}
+
+.progress{
+  display:flex;
+  gap:10px;
+  margin-bottom:30px;
+}
+
+.progress span{
+  height:7px;
+  flex:1;
+  background:#242424;
+  border-radius:999px;
+}
+
+.progress .done{
+  background:#c69656;
+}
+
+.step h3{
+  font-size:38px;
+  margin-bottom:14px;
+}
+
+.step p{
+  color:#b0b0b0;
+  line-height:1.7;
+  margin-bottom:24px;
+}
+
+.miniTitle{
+  color:#c69656 !important;
+  text-transform:uppercase;
+  letter-spacing:2px;
+  font-size:12px;
+  margin-bottom:12px;
+}
+
+.optionsList{
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+}
+
+.option{
+  background:#171717;
+  border:1px solid rgba(255,255,255,.07);
+  padding:22px;
+  border-radius:22px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  cursor:pointer;
+  transition:.25s;
+  color:white;
+}
+
+.option span{
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+}
+
+.option small{
+  color:#a8a8a8;
+}
+
+.option:hover{
+  border-color:#c69656;
+}
+
+.option.active,
+.timeGrid button.active,
+.choiceGrid button.active{
+  background:#c69656;
+  border-color:#c69656;
+}
+
+.timeGrid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+  margin-bottom:20px;
+}
+
+.timeGrid button,
+.choiceGrid button{
+  background:#171717;
+  border:1px solid rgba(255,255,255,.07);
+  color:white;
+  padding:18px;
+  border-radius:18px;
+  cursor:pointer;
+}
+
+.manualTimeToggle{
+  width:100%;
+  background:transparent;
+  color:#c69656;
+  border:1px dashed #c69656;
+  padding:16px;
+  border-radius:18px;
+  cursor:pointer;
+  margin-bottom:14px;
+}
+
+.choiceGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+
+.addressBox{
+  margin-top:16px;
+}
+
+.addressBox label{
+  display:block;
+  margin-bottom:10px;
+  color:#d0d0d0;
+}
+
+input,
+textarea{
+  width:100%;
+  background:#171717;
+  border:1px solid rgba(255,255,255,.07);
+  color:white;
+  padding:18px;
+  border-radius:18px;
+  outline:none;
+}
+
+input:focus,
+textarea:focus{
+  border-color:#c69656;
+}
+
+.stepButtons{
+  display:flex;
+  gap:14px;
+  margin-top:28px;
+}
+
+.backButton{
+  flex:1;
+  background:#1b1b1b;
+  border:none;
+  color:white;
+  border-radius:999px;
+  padding:16px;
+  cursor:pointer;
+}
+
+.mainButton{
+  flex:1;
+}
+
+.finalForm{
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+
+.summaryBox{
+  background:#171717;
+  border-radius:24px;
+  padding:24px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.summaryBox b{
+  color:#c69656;
+  font-size:24px;
+}
+
+.notice{
+  color:#999;
+  text-align:center;
+  font-size:14px;
+}
+
+.empty{
+  color:#999;
+}
+
+/* ADMIN */
+
+.adminPage{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:120px 20px;
+}
+
+.backLink{
+  display:inline-block;
+  margin-bottom:24px;
+  color:#c69656;
+}
+
+.adminForm,
+.adminPanel{
+  margin-top:30px;
+}
+
+.adminForm{
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+}
+
+.addHorario{
+  display:flex;
+  gap:14px;
+  margin-bottom:24px;
+}
+
+.adminList{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+
+.adminItem{
+  background:#171717;
+  border-radius:20px;
+  padding:20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.adminItem button{
+  background:#292929;
+  border:none;
+  color:white;
+  padding:12px 18px;
+  border-radius:14px;
+  cursor:pointer;
+}
+
+.error{
+  color:#ff7f7f;
+}
+
+/* MOBILE */
+
+@media(max-width:1000px){
+
+  .heroContent h1{
+    font-size:64px;
+  }
+
+  .bookingSection{
+    grid-template-columns:1fr;
+  }
+
+  .infoGrid{
+    grid-template-columns:1fr;
+  }
+
+  .servicesSection,
+  .bookingSection{
+    padding:90px 20px;
+  }
+
+  .nav{
+    padding:20px;
+  }
+}
+
+@media(max-width:700px){
+
+  .nav{
+    flex-direction:column;
+    gap:16px;
+  }
+
+  .nav nav{
+    flex-wrap:wrap;
+    justify-content:center;
+  }
+
+  .heroContent h1{
+    font-size:48px;
+  }
+
+  .subtitle{
+    font-size:16px;
+  }
+
+  .timeGrid{
+    grid-template-columns:1fr;
+  }
+
+  .choiceGrid{
+    grid-template-columns:1fr;
+  }
+
+  .stepButtons{
+    flex-direction:column;
+  }
+
+  .addHorario{
+    flex-direction:column;
+  }
+
+  .servicesSection h2,
+  .bookingIntro h2,
+  .adminBox h1{
+    font-size:42px;
+  }
+
+  .bookingCard,
+  .adminBox{
+    padding:24px;
+  }
+}
