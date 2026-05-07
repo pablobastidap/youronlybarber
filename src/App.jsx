@@ -296,7 +296,7 @@ function BookingWebsite() {
         </div>
       </section>
       <footer className="privateFooter">
-  <a href="/admin">.</a>
+  <a href="/admin">acceso admin</a>
 </footer>
     </main>
   );
