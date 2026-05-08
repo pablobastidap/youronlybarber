@@ -576,8 +576,19 @@ textarea:focus{
   .bookingCard,
   .adminBox{
     padding:24px;
+     }
+h1,
+h2,
+h3,
+.adminBox,
+.bookingIntro,
+.stepTitle{
+  color:white !important;
   }
-}main{
+
+  }
+
+main{
   display:flex;
   flex-direction:column;
   min-height:100vh;
