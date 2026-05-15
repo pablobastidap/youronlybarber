@@ -604,4 +604,185 @@ main{
   color:rgba(255,255,255,0.22);
   font-size:12px;
   text-decoration:underline;
+  }
+
+.clientWeekPicker{
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+}
+
+.clientDay{
+  background:#141414;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:24px;
+  padding:18px;
+}
+
+.clientDayHeader{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:14px;
+  color:white;
+}
+
+.clientSlots{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+}
+
+.clientSlot{
+  background:#1d1d1d;
+  color:white;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:16px;
+  padding:14px;
+}
+
+.clientSlot.active{
+  background:#c69656;
+}
+
+.noSlots{
+  color:#777;
+  font-size:14px;
+}
+
+.adminWeekCalendar{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:12px;
+  margin-top:25px;
+}
+
+.adminCalendarDay{
+  background:#121212;
+  border-radius:20px;
+  padding:12px;
+  border:1px solid rgba(255,255,255,.08);
+}
+
+.adminCalendarDayHeader{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:12px;
+}
+
+.adminCalendarSlots{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.adminCalendarSlot{
+  border:none;
+  border-radius:14px;
+  padding:10px;
+  color:white;
+  text-align:left;
+}
+
+.adminCalendarSlot span{
+  display:block;
+  font-weight:bold;
+}
+
+.adminCalendarSlot small{
+  opacity:.8;
+}
+
+.adminCalendarSlot.free{
+  background:#3a3a3a;
+}
+
+.adminCalendarSlot.pending{
+  background:#c77d1c;
+}
+
+.adminCalendarSlot.confirmed{
+  background:#278a4b;
+}
+
+.adminCalendarSlot.selected{
+  outline:2px solid white;
+}
+
+.legend{
+  display:flex;
+  gap:18px;
+  flex-wrap:wrap;
+}
+
+.legend span{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.legend i{
+  width:13px;
+  height:13px;
+  border-radius:50%;
+  display:inline-block;
+}
+
+.legendFree{background:#3a3a3a;}
+.legendPending{background:#c77d1c;}
+.legendConfirmed{background:#278a4b;}
+
+.bookingDrawer{
+  margin-top:25px;
+  background:#151515;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:24px;
+  padding:22px;
+}
+
+.bookingDrawerHeader{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:16px;
+}
+
+.bookingActions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:18px;
+}
+
+.bookingActions button{
+  background:#292929;
+  color:white;
+  border:none;
+  border-radius:14px;
+  padding:12px 14px;
+}
+
+.bookingActions .dangerMini{
+  background:#7a2424;
+}
+
+@media(max-width:900px){
+  .adminWeekCalendar{
+    grid-template-columns:1fr;
+  }
+
+  .clientSlots{
+    grid-template-columns:1fr 1fr;
+  }
+}
+
+@media(max-width:600px){
+  .clientSlots{
+    grid-template-columns:1fr;
+  }
+
+  .bookingDrawerHeader{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:8px;
+  }
 }
