@@ -786,3 +786,30 @@ main{
     gap:8px;
   }
 }
+.heroContent h1,
+.servicesSection h2,
+.bookingIntro h2,
+.adminBox h1,
+.step h3,
+.bookingCard h3,
+.adminBox h2,
+.adminBox h3,
+.serviceCards h3 {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+.heroContent .subtitle,
+.bookingIntro p,
+.step p,
+.adminBox p {
+  color: #d8d8d8 !important;
+  -webkit-text-fill-color: #d8d8d8 !important;
+}
+
+.sectionLabel,
+.kicker,
+.miniTitle {
+  color: #c69656 !important;
+  -webkit-text-fill-color: #c69656 !important;
+}
