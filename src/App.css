@@ -837,3 +837,70 @@ main{
     padding:70px 20px !important;
   }
 }
+.scheduleGroupedList{
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+  margin-top:26px;
+  text-align:left;
+}
+
+.scheduleDayGroup{
+  background:#141414;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:22px;
+  padding:18px;
+}
+
+.scheduleDayTitle{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:12px;
+}
+
+.scheduleDayTitle b{
+  color:white;
+  font-size:18px;
+}
+
+.scheduleDayTitle span{
+  color:#c69656;
+  font-weight:700;
+}
+
+.schedulePills{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+
+.schedulePill{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  background:#202020;
+  border-radius:999px;
+  padding:10px 12px;
+}
+
+.schedulePill span{
+  color:white;
+  font-weight:700;
+}
+
+.schedulePill label{
+  display:flex;
+  gap:5px;
+  align-items:center;
+  color:#aaa;
+  font-size:12px;
+}
+
+.schedulePill button{
+  border:0;
+  border-radius:999px;
+  padding:7px 10px;
+  background:#333;
+  color:white;
+}
