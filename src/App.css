@@ -813,3 +813,27 @@ main{
   color: #c69656 !important;
   -webkit-text-fill-color: #c69656 !important;
 }
+.heroSection{
+  min-height:720px !important;
+  padding:90px 30px 70px !important;
+}
+
+.servicesSection{
+  padding:80px 60px !important;
+}
+
+.bookingSection{
+  padding:80px 60px !important;
+}
+
+@media(max-width:700px){
+  .heroSection{
+    min-height:620px !important;
+    padding:90px 20px 60px !important;
+  }
+
+  .servicesSection,
+  .bookingSection{
+    padding:70px 20px !important;
+  }
+}
