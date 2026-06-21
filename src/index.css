@@ -109,3 +109,75 @@ code {
   padding: 4px 8px;
   background: var(--code-bg);
 }
+
+.clientCalendarPicker{
+  display:flex;
+  flex-direction:column;
+  gap:22px;
+}
+
+.clientDayGrid{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:10px;
+}
+
+.clientCalendarDay{
+  background:#171717;
+  border:1px solid rgba(255,255,255,.08);
+  color:white;
+  border-radius:18px;
+  padding:14px 8px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:6px;
+  cursor:pointer;
+}
+
+.clientCalendarDay b{
+  font-size:24px;
+}
+
+.clientCalendarDay small{
+  color:#aaa;
+  font-size:11px;
+}
+
+.clientCalendarDay.active{
+  background:#c69656;
+  border-color:#c69656;
+}
+
+.clientCalendarDay.disabled{
+  opacity:.35;
+  cursor:not-allowed;
+}
+
+.clientDaySlotsBox{
+  background:#141414;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:24px;
+  padding:20px;
+}
+
+.clientDaySlotsBox h4{
+  margin-bottom:16px;
+  color:white;
+}
+
+.clientSlots{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+}
+
+@media(max-width:700px){
+  .clientDayGrid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .clientSlots{
+    grid-template-columns:1fr 1fr;
+  }
+}
