@@ -8,9 +8,9 @@ const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 const DEFAULT_SETTINGS = {
   id: 1,
-  admin_password: "1234",
-  brand: "Hairy",
-  hero_title: "We Will Make You Stylish",
+  admin_password: "636011",
+  brand: "pablo_bastidap",
+  hero_title: "Your Barber.",
   hero_subtitle: "Cortes limpios, degradados, barba, cejas y diseño. Solicita tu cita y te confirmaré manualmente por WhatsApp.",
   phone: "34699776068",
   background_url: "https://imgs.search.brave.com/f2ZjguQyvP0To614u4Xuf-MQY0bOcS7ew_o0gjI4Z9o/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9wbHVzLnVuc3BsYXNoLmNvbS9wcmVtaXVtX3Bob3RvLTE2NjEzODA1NTg4NTktNDBkZjhkZDkxZGZkP2ZtPWpwZyZxPTYwJnc9MzAwMCZpeGxpYj1yYi00LjEuMCZpeGlkPU0zZHhNakEzZkRCOE1IeHpaV0Z5WTJoOE5YbDhZbUZ5WW1WeWZHbHVfREI4ZkRCOGZId3c",
@@ -22,7 +22,7 @@ const DEFAULT_SETTINGS = {
   duration_subtext: "Duración según pedido",
   cut_time_text: "45’",
   cut_time_subtext: "Corte aprox.",
-  home_extra_price: 2,
+  home_extra_price: 4,
 };
 
 const DAY_NAMES = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
