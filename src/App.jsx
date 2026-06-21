@@ -44,11 +44,12 @@ function startOfWeek(date = new Date()) {
   return copy;
 }
 
-function getCurrentWeekDays() {
+function getVisibleDays() {
   const start = startOfWeek();
-  return Array.from({ length: 7 }, (_, index) => {
+  return Array.from({ length: 14 }, (_, index) => {
     const date = new Date(start);
     date.setDate(start.getDate() + index);
+
     return {
       date,
       dateString: toLocalDateString(date),
@@ -85,6 +86,7 @@ export default function App() {
 function BookingWebsite() {
   const [settings, setSettings] = useState(DEFAULT_SETTINGS);
   const [services, setServices] = useState([]);
+  const [selectedDay, setSelectedDay] = useState(null);
   const [schedules, setSchedules] = useState([]);
   const [step, setStep] = useState(0);
   const [sending, setSending] = useState(false);
@@ -100,7 +102,7 @@ function BookingWebsite() {
     note: "",
   });
 
-  const weekDays = useMemo(() => getCurrentWeekDays(), []);
+const weekDays = useMemo(() => getVisibleDays(), []);
   const weekStart = weekDays[0].dateString;
   const weekEnd = weekDays[6].dateString;
 
@@ -330,28 +332,56 @@ function BookingWebsite() {
 }
 
 function ClientWeekPicker({ weekDays, schedules, selectedId, onSelect }) {
-  const grouped = weekDays.map((day) => ({
-    ...day,
-    slots: schedules.filter((schedule) => schedule.schedule_date === day.dateString).sort(sortByDateTime),
-  }));
+  const [selectedDay, setSelectedDay] = useState(null);
+
+  const selectedDayData = weekDays.find((day) => day.dateString === selectedDay);
+
+  const selectedSlots = selectedDay
+    ? schedules
+        .filter((schedule) => schedule.schedule_date === selectedDay)
+        .sort(sortByDateTime)
+    : [];
 
   return (
-    <div className="clientWeekPicker">
-      {grouped.map((day) => (
-        <div className="clientDay" key={day.dateString}>
-          <div className="clientDayHeader">
-            <b>{day.dayName}</b>
-            <span>{day.dayNumber}</span>
-          </div>
+    <div className="clientCalendarPicker">
+      <div className="clientDayGrid">
+        {weekDays.map((day) => {
+          const slots = schedules.filter((schedule) => schedule.schedule_date === day.dateString);
+          const hasSlots = slots.length > 0;
+
+          return (
+            <button
+              type="button"
+              key={day.dateString}
+              onClick={() => hasSlots && setSelectedDay(day.dateString)}
+              className={`clientCalendarDay ${selectedDay === day.dateString ? "active" : ""} ${!hasSlots ? "disabled" : ""}`}
+            >
+              <span>{day.shortName}</span>
+              <b>{day.dayNumber}</b>
+              <small>{hasSlots ? `${slots.length} disponibles` : "Sin horas"}</small>
+            </button>
+          );
+        })}
+      </div>
+
+      {selectedDayData && (
+        <div className="clientDaySlotsBox">
+          <h4>{selectedDayData.dayName} {selectedDayData.dayNumber}</h4>
+
           <div className="clientSlots">
-            {day.slots.length > 0 ? day.slots.map((slot) => (
-              <button type="button" key={slot.id} onClick={() => onSelect(slot)} className={selectedId === slot.id ? "clientSlot active" : "clientSlot"}>
+            {selectedSlots.map((slot) => (
+              <button
+                type="button"
+                key={slot.id}
+                onClick={() => onSelect(slot)}
+                className={selectedId === slot.id ? "clientSlot active" : "clientSlot"}
+              >
                 {slot.schedule_time?.slice(0, 5)}
               </button>
-            )) : <span className="noSlots">Sin horarios</span>}
+            ))}
           </div>
         </div>
-      ))}
+      )}
     </div>
   );
 }
@@ -391,7 +421,7 @@ function AdminPanel() {
   const [error, setError] = useState("");
   const [saved, setSaved] = useState("");
 
-  const weekDays = useMemo(() => getCurrentWeekDays(), []);
+const weekDays = useMemo(() => getVisibleDays(), []);
   const weekStart = weekDays[0].dateString;
   const weekEnd = weekDays[6].dateString;
 
