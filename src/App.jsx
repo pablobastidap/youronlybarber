@@ -102,9 +102,10 @@ function BookingWebsite() {
     note: "",
   });
 
-const weekDays = useMemo(() => getVisibleDays(), []);
+  const weekDays = useMemo(() => getVisibleDays(), []);
   const weekStart = weekDays[0].dateString;
   const weekEnd = weekDays[6].dateString;
+  const visibleEnd = weekDays[13].dateString;
 
   useEffect(() => {
     loadPublicData();
@@ -118,7 +119,7 @@ const weekDays = useMemo(() => getVisibleDays(), []);
       .select("*")
       .eq("active", true)
       .gte("schedule_date", weekStart)
-      .lte("schedule_date", weekEnd)
+      .lte("schedule_date", visibleEnd)
       .order("schedule_date", { ascending: true })
       .order("schedule_time", { ascending: true });
 
@@ -267,7 +268,7 @@ const weekDays = useMemo(() => getVisibleDays(), []);
               )}
 
               {step === 2 && (
-                <Step title="Elige horario de esta semana" text="Solo se muestran los horarios publicados para esta semana.">
+                <Step title="Elige horario de esta semana" text="Solo se muestran los horarios publicados para las dos semanas que vienen.">
                   <ClientWeekPicker
                     weekDays={weekDays}
                     schedules={schedules}
@@ -338,8 +339,8 @@ function ClientWeekPicker({ weekDays, schedules, selectedId, onSelect }) {
 
   const selectedSlots = selectedDay
     ? schedules
-        .filter((schedule) => schedule.schedule_date === selectedDay)
-        .sort(sortByDateTime)
+      .filter((schedule) => schedule.schedule_date === selectedDay)
+      .sort(sortByDateTime)
     : [];
 
   return (
@@ -421,9 +422,10 @@ function AdminPanel() {
   const [error, setError] = useState("");
   const [saved, setSaved] = useState("");
 
-const weekDays = useMemo(() => getVisibleDays(), []);
+  const weekDays = useMemo(() => getVisibleDays(), []);
   const weekStart = weekDays[0].dateString;
   const weekEnd = weekDays[6].dateString;
+  const visibleEnd = weekDays[13].dateString;
 
   useEffect(() => {
     loadLoginSettings();
@@ -441,7 +443,7 @@ const weekDays = useMemo(() => getVisibleDays(), []);
   async function loadAdminData() {
     const { data: settingsData } = await supabase.from("settings").select("*").eq("id", 1).single();
     const { data: servicesData } = await supabase.from("services").select("*").order("position", { ascending: true });
-    const { data: schedulesData } = await supabase.from("schedules").select("*").gte("schedule_date", weekStart).lte("schedule_date", weekEnd).order("schedule_date", { ascending: true }).order("schedule_time", { ascending: true });
+    const { data: schedulesData } = await supabase.from("schedules").select("*").gte("schedule_date", weekStart).lte("schedule_date", visibleEnd).order("schedule_date", { ascending: true }).order("schedule_time", { ascending: true });
     const { data: bookingsData } = await supabase.from("bookings").select("*").order("created_at", { ascending: false });
 
     if (settingsData) setSettings(settingsData);
@@ -492,9 +494,28 @@ const weekDays = useMemo(() => getVisibleDays(), []);
   }
 
   async function addCalendarSlot() {
-    if (!newSlot.schedule_date || !newSlot.schedule_time) return;
+    if (!newSlot.schedule_date || !newSlot.schedule_time) {
+      alert("Elige fecha y hora.");
+      return;
+    }
+
     const label = `${formatDateLabel(newSlot.schedule_date)} ${newSlot.schedule_time}`;
-    await supabase.from("schedules").insert([{ label, schedule_date: newSlot.schedule_date, schedule_time: newSlot.schedule_time, active: true }]);
+
+    const { error } = await supabase.from("schedules").insert([
+      {
+        label,
+        schedule_date: newSlot.schedule_date,
+        schedule_time: newSlot.schedule_time,
+        active: true,
+      },
+    ]);
+
+    if (error) {
+      console.error(error);
+      alert("No se pudo añadir el horario. Mira la consola para ver el error.");
+      return;
+    }
+
     loadAdminData();
   }
 
@@ -625,12 +646,57 @@ const weekDays = useMemo(() => getVisibleDays(), []);
               <div>
                 <div className="adminSubBox">
                   <h3>Añadir horario esta semana</h3>
-                  <input type="date" min={weekStart} max={weekEnd} value={newSlot.schedule_date} onChange={(e) => setNewSlot({ ...newSlot, schedule_date: e.target.value })} />
+                  <input type="date" min={weekStart} max={visibleEnd} value={newSlot.schedule_date} onChange={(e) => setNewSlot({ ...newSlot, schedule_date: e.target.value })} />
                   <input type="time" value={newSlot.schedule_time} onChange={(e) => setNewSlot({ ...newSlot, schedule_time: e.target.value })} />
                   <button type="button" className="mainButton" onClick={addCalendarSlot}>Añadir horario</button>
-                  <p className="notice">Solo se muestran a los clientes horarios de la semana actual.</p>
+                  <p className="notice">Solo se muestran a los clientes horarios de la semana actual y la siguiente.</p>
                 </div>
-                <div className="adminList">{schedules.map((schedule) => <div className="adminItem editable" key={schedule.id}><input type="date" min={weekStart} max={weekEnd} value={schedule.schedule_date || ""} onChange={(e) => updateSchedule(schedule.id, "schedule_date", e.target.value)} /><input type="time" value={schedule.schedule_time || ""} onChange={(e) => updateSchedule(schedule.id, "schedule_time", e.target.value)} /><label className="checkLabel"><input type="checkbox" checked={schedule.active} onChange={(e) => updateSchedule(schedule.id, "active", e.target.checked)} /> Visible</label><button type="button" onClick={() => deleteSchedule(schedule.id)}>Borrar</button></div>)}</div>
+                <div className="scheduleGroupedList">
+  {weekDays.map((day) => {
+    const daySchedules = schedules.filter(
+      (schedule) => schedule.schedule_date === day.dateString
+    );
+
+    return (
+      <div className="scheduleDayGroup" key={day.dateString}>
+        <div className="scheduleDayTitle">
+          <b>{day.dayName}</b>
+          <span>{day.dayNumber}</span>
+        </div>
+
+        {daySchedules.length ? (
+          <div className="schedulePills">
+            {daySchedules.map((schedule) => (
+              <div className="schedulePill" key={schedule.id}>
+                <span>{schedule.schedule_time?.slice(0, 5)}</span>
+
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={schedule.active}
+                    onChange={(e) =>
+                      updateSchedule(schedule.id, "active", e.target.checked)
+                    }
+                  />
+                  visible
+                </label>
+
+                <button
+                  type="button"
+                  onClick={() => deleteSchedule(schedule.id)}
+                >
+                  borrar
+                </button>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="noSlots">Sin horarios</p>
+        )}
+      </div>
+    );
+  })}
+</div>
               </div>
             )}
 
