@@ -45,10 +45,12 @@ function startOfWeek(date = new Date()) {
 }
 
 function getVisibleDays() {
-  const start = startOfWeek();
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
   return Array.from({ length: 14 }, (_, index) => {
-    const date = new Date(start);
-    date.setDate(start.getDate() + index);
+    const date = new Date(today);
+    date.setDate(today.getDate() + index);
 
     return {
       date,
@@ -103,8 +105,7 @@ function BookingWebsite() {
   });
 
   const weekDays = useMemo(() => getVisibleDays(), []);
-  const weekStart = weekDays[0].dateString;
-  const weekEnd = weekDays[6].dateString;
+  const visibleStart = weekDays[0].dateString;
   const visibleEnd = weekDays[13].dateString;
 
   useEffect(() => {
@@ -118,7 +119,7 @@ function BookingWebsite() {
       .from("schedules")
       .select("*")
       .eq("active", true)
-      .gte("schedule_date", weekStart)
+      .gte("schedule_date", visibleStart)
       .lte("schedule_date", visibleEnd)
       .order("schedule_date", { ascending: true })
       .order("schedule_time", { ascending: true });
@@ -159,6 +160,7 @@ function BookingWebsite() {
       service: form.service,
       schedule_id: form.scheduleId,
       schedule_label: form.time,
+      schedule_date: schedules.find(s => s.id === form.scheduleId)?.schedule_date,
       home_service: form.homeService,
       address: form.address || null,
       note: form.note || null,
@@ -423,9 +425,8 @@ function AdminPanel() {
   const [saved, setSaved] = useState("");
 
   const weekDays = useMemo(() => getVisibleDays(), []);
-  const weekStart = weekDays[0].dateString;
-  const weekEnd = weekDays[6].dateString;
-  const visibleEnd = weekDays[13].dateString;
+const visibleStart = weekDays[0].dateString;
+const visibleEnd = weekDays[13].dateString;
 
   useEffect(() => {
     loadLoginSettings();
@@ -443,8 +444,8 @@ function AdminPanel() {
   async function loadAdminData() {
     const { data: settingsData } = await supabase.from("settings").select("*").eq("id", 1).single();
     const { data: servicesData } = await supabase.from("services").select("*").order("position", { ascending: true });
-    const { data: schedulesData } = await supabase.from("schedules").select("*").gte("schedule_date", weekStart).lte("schedule_date", visibleEnd).order("schedule_date", { ascending: true }).order("schedule_time", { ascending: true });
-    const { data: bookingsData } = await supabase.from("bookings").select("*").order("created_at", { ascending: false });
+    const { data: schedulesData } = await supabase.from("schedules").select("*").gte("schedule_date", visibleStart).lte("schedule_date", visibleEnd).order("schedule_date", { ascending: true }).order("schedule_time", { ascending: true });
+    const { data: bookingsData } = await supabase.from("bookings").select("*").gte("schedule_date", visibleStart).order("schedule_date", { ascending: true });
 
     if (settingsData) setSettings(settingsData);
     if (servicesData) setServices(servicesData);
@@ -646,7 +647,7 @@ function AdminPanel() {
               <div>
                 <div className="adminSubBox">
                   <h3>Añadir horario esta semana</h3>
-                  <input type="date" min={weekStart} max={visibleEnd} value={newSlot.schedule_date} onChange={(e) => setNewSlot({ ...newSlot, schedule_date: e.target.value })} />
+                  <input type="date" min={visibleStart} max={visibleEnd} value={newSlot.schedule_date} onChange={(e) => setNewSlot({ ...newSlot, schedule_date: e.target.value })} />
                   <input type="time" value={newSlot.schedule_time} onChange={(e) => setNewSlot({ ...newSlot, schedule_time: e.target.value })} />
                   <button type="button" className="mainButton" onClick={addCalendarSlot}>Añadir horario</button>
                   <p className="notice">Solo se muestran a los clientes horarios de la semana actual y la siguiente.</p>
